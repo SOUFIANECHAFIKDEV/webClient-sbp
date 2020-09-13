@@ -1,0 +1,194 @@
+<div class="content-header row" *ngIf="idChantier == null">
+    <div class="content-header-left col-md-6 col-12 mb-2">
+        <h3 class="content-header-title mb-0">{{ 'list.title' | translate }}</h3>
+    </div>
+    <div class="content-header-right col-md-6 col-12">
+        <div class="float-md-right">
+
+        </div>
+    </div>
+</div>
+
+<section id="multi-column">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-content collapse show">
+                    <div class="card-body card-dashboard">
+                        <recherche-avancee>
+                            <div class="recherche-avancee-body">
+
+
+                                <div class="ui-g ui-fluid" *ngIf="dateLang">
+                                    <div class="ui-g-6 ui-md-6">
+                                        <h6 style="font-weight: bold">{{'list.statut' | translate }}
+                                        </h6>
+                                        <ng-select [hideSelected]="true" bindLabel="name"
+                                            notFoundText="{{'labels.noFoundItem' | translate}}" [(ngModel)]="statut"
+                                            (change)="rerender()">
+                                            <ng-option *ngFor="let item of listStatus" [value]="item?.value">
+                                                {{ item?.name }}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="ui-g-6 ui-md-6" *ngIf="!CallFromOutSide">
+                                        <h6 style="font-weight: bold">{{'list.chantier' | translate }}
+                                        </h6>
+                                        <ng-select [hideSelected]="true" bindLabel="name"
+                                            notFoundText="{{'labels.noFoundItem' | translate}}" [(ngModel)]="idChantier"
+                                            (change)="rerender()">
+                                            <ng-option *ngFor="let item of listChantiers" [value]="item?.id">
+                                                {{ item?.nom }}</ng-option>
+                                        </ng-select>
+                                    </div>
+                                    <div class="ui-g-6 ui-md-6">
+                                        <h6 style="font-weight: bold">{{ 'labels.dateMinimale' | translate }}
+                                        </h6>
+                                        <p-calendar [(ngModel)]="dateMinimal" [inputStyle]="{'height':'33px'}"
+                                            [locale]="dateLang" showButtonBar="true" dateFormat="dd/mm/yy"
+                                            showIcon="true" (onSelect)="changeDateMinimal();"
+                                            (onInput)="changeDateMinimal()"></p-calendar>
+                                    </div>
+                                    <div class="ui-g-6 ui-md-6">
+                                        <h6 style="font-weight: bold">{{ 'labels.dateMaximale' | translate }}
+                                        </h6>
+                                        <p-calendar [(ngModel)]="dateMaximal" [inputStyle]="{'height':'33px'}"
+                                            [locale]="dateLang" showButtonBar="true" dateFormat="dd/mm/yy"
+                                            showIcon="true" (onSelect)="changeDateMaximal()"
+                                            (onInput)="changeDateMaximal()"></p-calendar>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </recherche-avancee>
+
+
+                        <show-hide-table-columns [columns]="tableColumns" [tableName]="'factureTable'"
+                            [btnLabel]="'Afficher_Masquées_Les_Colonnes' | translate"
+                            [showAll]="'list.montreTout' | translate" [showNone]="'list.montrerAucun' | translate"
+                            [checkedColumns]="checkedColumns" (selectColumn)="SetCheckedColmuns($event)">
+                        </show-hide-table-columns>
+
+                        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                            class="table table-striped table-bordered" style="width:100%" id="factureTable">
+                            <thead>
+                                <!-- <tr>
+                                    <ng-container *ngFor="let column of tableColumns; let index = index">
+                                        <th *ngIf="tableColumns.length - 1 != index">{{ column }}</th>
+                                    </ng-container>
+                                    <th class="actions">
+                                        {{ tableColumns[tableColumns.length - 1] }}
+                                    </th>
+                                </tr> -->
+                                <tr>
+
+                                    <th>{{'labels.reference' | translate }}</th>
+                                    <th>{{'labels.statut' | translate }}</th>
+                                    <th>
+                                        {{'labels.client' | translate }}
+                                        <br>
+                                        {{'labels.chantier' | translate }}
+                                    </th>
+                                    <th>{{'labels.dateCreation' | translate }}</th>
+                                    <th>{{'labels.dateEcheance' | translate }}</th>
+                                    <th>{{'labels.totalTTC' | translate }}
+                                        <br>
+                                        {{'labels.restePayer' | translate }}
+                                    </th>
+                                    <th class="actions">{{'labels.actions' | translate }}</th>
+
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="factures?.list?.length > 0">
+                                <tr *ngFor="let facture of factures?.list" (dblclick)="doubleClick(facture?.id)">
+                                    <td [hidden]="checkedColumns[0]">
+                                        <!-- <i class="ft-lock" style="font-weight: 600;"></i> -->
+                                        {{ facture?.reference }}
+                                    </td>
+
+                                    <!-- status de facture-->
+                                    <td *ngIf="facture?.status == statutFacture.Brouillon" [hidden]="checkedColumns[1]">
+                                        <span class="badge badge-default badge-brouillon">{{
+                      'labels.brouillon' | translate
+                    }}</span>
+                                    </td>
+                                    <td *ngIf="facture?.status == statutFacture.Encours" [hidden]="checkedColumns[1]">
+                                        <span class="badge badge-default badge-planifiee">{{
+                      'labels.encours' | translate
+                    }}</span>
+                                    </td>
+                                    <td *ngIf="facture?.status == statutFacture.Cloture" [hidden]="checkedColumns[1]">
+                                        <span class="badge badge-default badge-success">{{
+                      'labels.cloture' | translate
+                    }}</span>
+                                    </td>
+                                    <td *ngIf="facture?.status == statutFacture.Enretard" [hidden]="checkedColumns[1]">
+                                        <span class="badge badge-default badge-enretard">{{
+                      'labels.enretard' | translate
+                    }}</span>
+                                    </td>
+                                    <td *ngIf="facture?.status == statutFacture.Annule" [hidden]="checkedColumns[1]">
+                                        <span class="badge badge-default badge-annuler">{{
+                      'labels.annulee' | translate
+                    }}</span>
+                                    </td>
+
+                                    <!-- <td [hidden]="checkedColumns[2]">
+                                        {{ GetNameOfChantier(facture?.idChantier) }}
+                                    </td> -->
+                                    <td [hidden]="checkedColumns[2]">
+                                        {{loadClient(facture)}}
+
+                                        <p style="color: #1d7b85;"> {{ facture?.chantier?.nom}}</p>
+                                    </td>
+
+                                    <td [hidden]="checkedColumns[3]">
+                                        {{ facture?.dateCreation | date: 'dd/MM/yyyy' }}
+                                    </td>
+
+                                    <td [hidden]="checkedColumns[4]">
+                                        {{ facture?.dateEcheance | date: 'dd/MM/yyyy' }}
+                                    </td>
+
+                                    <td [hidden]="checkedColumns[5]" class="text-right">
+                                        <span class="display-price">{{ facture?.total | RoudingNumber | ShowCurrency }}
+                                        </span><br />
+                                        <small style="font-style: italic;" *ngIf="
+                        facture?.status == statutFacture.Encours ||
+                        facture?.status == statutFacture.Enretard
+                      ">
+                                            ({{ 'labels.restePayer' | translate }}
+                                            {{ facture?.total | RestePayer:facture?.facturePaiements | RoudingNumber | ShowCurrency }})
+                                        </small>
+                                    </td>
+
+                                    <td class="actions" [hidden]="checkedColumns[6]">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-primary btn-md btn-actions"
+                                                placement="bottom" ngbTooltip="{{ 'toolip.detail' | translate }}"
+                                                (click)="navigateToFactureDetail(facture?.id)">
+                                                <i class="ft-eye"></i>
+                                            </button>
+
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="factures?.list?.length == 0">
+                                <tr>
+                                    <td colspan="7" class="no-data-available">{{ 'noDataAvaible' | translate }}</td>
+                                </tr>
+                            </tbody>
+
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<custom-loader [displayLoader]="processing"></custom-loader>

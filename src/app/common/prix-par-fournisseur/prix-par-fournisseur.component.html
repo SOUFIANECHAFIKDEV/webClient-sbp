@@ -1,0 +1,126 @@
+<ng-container *ngIf="!hideAddBtn">
+    <button type="button" class="btn btn-primary btn-min-width" style="float: right;" *ngIf="!readOnly"
+        data-toggle="modal" data-target="#AddPrixParFournisseurModel" placement="bottom"
+        ngbTooltip="{{ 'PrixParFournisseur.labels.btn_add' | translate }}" (click)="open();OperationsType = 0;">
+        {{ 'PrixParFournisseur.labels.btn_add' | translate }}<i class="ft-plus"></i>
+    </button>
+</ng-container>
+
+<div style="margin: 2rem 0rem;">
+    <div class="row">
+        <div class="col-md-3 card-container" [ngClass]="{'col-md-2': xl,'col-md-4': !xl}"
+            *ngFor="let item of PrixParFournisseur; let index=  index">
+            <div class="header" *ngIf="!readOnly">
+                <button type="button" data-toggle="modal" data-target="#EditPrixParFournisseurModel"
+                    (click)="OperationsType = 1;PrixParFournisseurIndex = index;select(item);open()"><i
+                        class="ft-edit-2"></i></button>
+                <button type="button" (click)="deletePrixParFournisseur(index)"><i class="ft-x"></i></button>
+            </div>
+            <div class="body">
+                <ul>
+                    <li>{{ 'PrixParFournisseur.labels.Fournisseur' | translate }} : <strong>{{item?.idFournisseur |
+              GetNameOfFournisseurById}} </strong>
+                    </li>
+                    <li>{{ 'PrixParFournisseur.labels.Prix' | translate }} :
+                        <span><strong>{{item?.prix | RoudingNumber }}
+                                €</strong></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--add Modal -->
+<div class="modal fade text-left" id="AddPrixParFournisseurModel" tabindex="-1" role="dialog"
+    aria-labelledby="AddPrixParFournisseurModel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel35">{{'PrixParFournisseur.labels.model_add_title' | translate}}
+                </h3>
+                <button type="button" class="close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form form-horizontal" [formGroup]="form" (ngSubmit)="add()">
+                <div class="modal-body">
+                    <fieldset class="form-group floating-label-form-group">
+                        <label for="title1">{{ 'PrixParFournisseur.labels.PrixEtDevise' | translate }}</label>
+                        <input type="number" min="0" class="form-control input" name="prix" formControlName="Prix"
+                            appInputRemoveDefaultZero>
+                        <small class="text-danger"
+                            *ngIf="f?.Prix?.errors?.required">{{'errors.required' | translate }}</small>
+                    </fieldset>
+
+                    <fieldset class="form-group floating-label-form-group">
+                        <label for="title1">
+                            {{'PrixParFournisseur.labels.Fournisseur' | translate}}
+                        </label>
+                        <select name="idFournisseur" class="form-control" formControlName="IdFournisseur">
+                            <option *ngFor="let Fournisseur of FournisseurList" [value]="Fournisseur?.id">
+                                {{Fournisseur?.nom}}
+                            </option>
+                        </select>
+                        <small class="text-danger"
+                            *ngIf="f?.IdFournisseur?.errors?.required">{{'errors.required' | translate }}</small>
+                    </fieldset>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="reset" class="btn grey btn-light" value="Fermer"
+                        (click)="CachedPrixParFournisseur = null;closeModal()">
+                    <input type="submit" class="btn btn-success btn-lg" [disabled]="!form.valid"
+                        value="{{'PrixParFournisseur.labels.ajouterPrixParFournisseur_btn' | translate}}">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade text-left" id="EditPrixParFournisseurModel" tabindex="-1" role="dialog"
+    aria-labelledby="EditPrixParFournisseurModel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel35">
+                    {{'PrixParFournisseur.labels.model_update_title' | translate}}
+                </h3>
+                <button type="button" class="close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="form form-horizontal" [formGroup]="form" (ngSubmit)="update()">
+                <div class="modal-body">
+                    <fieldset class="form-group floating-label-form-group">
+                        <label for="title1">{{ 'PrixParFournisseur.labels.PrixEtDevise' | translate }}</label>
+                        <input type="number" min="0" class="form-control input" name="prix" formControlName="Prix"
+                            appInputRemoveDefaultZero>
+                        <small class="text-danger"
+                            *ngIf="f?.Prix?.errors?.required">{{'errors.required' | translate }}</small>
+                    </fieldset>
+
+                    <fieldset class="form-group floating-label-form-group">
+                        <label for="title1">
+                            {{'PrixParFournisseur.labels.Fournisseur' | translate}}
+                        </label>
+                        <select name="idFournisseur" class="form-control" formControlName="IdFournisseur">
+                            <option *ngFor="let Fournisseur of FournisseurList" [value]="Fournisseur?.id">
+                                {{Fournisseur?.nom}}
+                            </option>
+                        </select>
+                        <small class="text-danger"
+                            *ngIf="f?.IdFournisseur?.errors?.required">{{'errors.required' | translate }}</small>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <input type="reset" class="btn btn-ligth btn-lg" value="{{ 'labels.cancel'| translate }}"
+                        (click)="CachedPrixParFournisseur = null;closeModal()"
+                        ngbTooltip="{{ 'labels.cancel'| translate }}">
+                    <input type="submit" class="btn btn-success btn-lg"
+                        ngbTooltip="{{ 'PrixParFournisseur.labels.modifierPrixParFournisseur_btn'| translate }}"
+                        value="{{'PrixParFournisseur.labels.modifierPrixParFournisseur_btn' | translate}}">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

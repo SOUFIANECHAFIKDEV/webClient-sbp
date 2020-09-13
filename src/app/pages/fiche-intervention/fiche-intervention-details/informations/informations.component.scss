@@ -1,0 +1,90 @@
+button.btn.btn-info.btn-sm {
+    margin-top: 0.4vw;
+}
+
+.statut-Annulee {
+    background-color: #fe0000 !important;
+    color: #eceff1;
+    font-size: 15px;
+    border-radius: 16px;
+    top: -45px !important;
+    padding: 0.5rem 1rem;
+  }
+  
+  .statut-Realise {
+    background-color: #2ecc71 !important;
+    color: #eceff1;
+    font-size: 15px;
+    border-radius: 16px;
+    top: -45px !important;
+    padding: 0.5rem 1rem;
+  }
+  
+  .statut-Planifiee {
+    background-color: #00d2d3 !important;
+    color: #eceff1;
+    font-size: 15px;
+    border-radius: 16px;
+    top: -45px !important;
+    padding: 0.5rem 1rem;
+  }
+  
+  .statut-Brouillon {
+    background-color: #636e72 !important;
+    color: #eceff1;
+    font-size: 15px;
+    border-radius: 16px;
+    top: -45px !important;
+    padding: 0.5rem 1rem;
+  }
+  
+  .statut-Facturee {
+    background-color: #3498db !important;
+    color: #eceff1;
+    font-size: 15px;
+    border-radius: 16px;
+    top: -45px !important;
+    padding: 0.5rem 1rem;
+  }
+
+  .card-header {
+    background: #ffffff !important;
+    color: white !important;
+    //font-size: 5px !important;
+    padding: 1rem 1.5rem;
+  }
+  
+
+  .btn.btn-round {
+ 
+    margin-top: -130px  !important;
+}
+.richTextArea{
+  min-height: 5rem;
+  padding: .5rem .8rem 1rem;
+  border: 1px solid #ddd;
+}
+
+.richTextArea {
+  background: #ebebeb;
+}
+.badge-brouillon{
+  background-color: #636e72 !important;  
+}
+.badge-annuler{
+  background-color:#fe0000  !important;
+
+}
+.badge-enretard{
+  background-color:#ffa87d  !important;
+}
+.badge-planifiee{
+  background-color :#00d2d3 !important;
+}
+.badge-success{
+  background-color: #2ecc71 !important;
+}
+
+
+
+

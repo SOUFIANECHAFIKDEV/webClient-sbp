@@ -1,0 +1,143 @@
+<ng-container *ngIf="!readOnly">
+    <form class="form form-horizontal" [formGroup]="form">
+        <!-- totalHt & tva-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 label-control" for="totalHt">{{'labels.totalHt' | translate}}</label>
+                    <div class="col-md-9">
+                        <input type="number" formControlName="totalHt" id="totalHt" class="form-control" min="0" />
+
+                        <small class="text-danger"
+                            *ngIf="f?.totalHt?.errors?.required">{{'errors.required' | translate }}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 label-control" for="tva">{{'labels.tva' | translate}}</label>
+                    <div class="col-md-9">
+                        <input type="number" formControlName="tva" id="tva" class="form-control" min="0" />
+                        <small class="text-danger"
+                            *ngIf="f?.tva?.errors?.required">{{'errors.required' | translate }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- puc & prorata-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 label-control" for="puc">{{'labels.puc' | translate}}</label>
+                    <div class="col-md-9">
+                        <input type="number" formControlName="puc" id="puc" class="form-control" min="0" />
+                        <small class="text-danger"
+                            *ngIf="f?.puc?.errors?.required">{{'errors.required' | translate }}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 label-control" for="prorata">{{'labels.prorata' | translate}}</label>
+                    <div class="col-md-9">
+                        <input type="number" formControlName="prorata" id="prorata" class="form-control" min="0" />
+                        <small class="text-danger"
+                            *ngIf="f?.prorata?.errors?.required">{{'errors.required' | translate }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- devisExel-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="label-control" for="puc">{{'labels.articles' | translate}}</label>
+                    </div>
+                    <div class="col-md-9" *ngIf="f?.devisExel.value == null && !readOnly">
+                        <label class="label-control" for="devisExel"
+                            class="btn-file-upload">{{'labels.chooseFile' | translate}}</label>
+                        <input class="file-input" type="file" (change)="startUpload($event.target.files)" id="devisExel"
+                            name="files" style="visibility:hidden;" /><br />
+                        <small class="text-danger"
+                            *ngIf="f?.devisExel?.errors?.required">{{'errors.required' | translate }}</small>
+                    </div>
+                    <div class="col-md-9" *ngIf="f?.devisExel.value != null">
+                        <p>{{ f?.devisExel?.value?.orignalName }} <i class="ft-download" (click)="downloadFile()"></i>
+                            <i class="ft-trash" *ngIf="!readOnly" (click)="removeFile()"></i></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-container>
+<ng-container *ngIf="readOnly">
+    <form class="form form-horizontal" [formGroup]="form">
+        <!-- totalHt & tva-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 label-control" for="totalHt">{{'labels.totalHt' | translate}}</label>
+                    <div class="col-md-9">
+                        <input type="number" [value]="data.totalHt" class="form-control" id="totalHt" disabled />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 label-control" for="tva">{{'labels.tva' | translate}}</label>
+                    <div class="col-md-9">
+                        <input type="number" [value]="data.tva" class="form-control" id="totalHt" disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- puc & prorata-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 label-control" for="puc">{{'labels.puc' | translate}}</label>
+                    <div class="col-md-9">
+                        <input type="number" [value]="data.puc" class="form-control" id="totalHt" disabled />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-3 label-control" for="prorata">{{'labels.prorata' | translate}}</label>
+                    <div class="col-md-9">
+                        <input type="number" [value]="data.prorata" class="form-control" id="totalHt" disabled />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- devisExel-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="label-control" for="puc">{{'labels.articles' | translate}}</label>
+                    </div>
+                    <div class="col-md-9" *ngIf="f?.devisExel.value == null && !readOnly">
+                        <label class="label-control" for="devisExel"
+                            class="btn-file-upload">{{'labels.chooseFile' | translate}}</label>
+                        <input class="file-input" type="file" (change)="startUpload($event.target.files)" id="devisExel"
+                            name="files" style="visibility:hidden;" /><br />
+                        <small class="text-danger"
+                            *ngIf="f?.devisExel?.errors?.required">{{'errors.required' | translate }}</small>
+                    </div>
+                    <div class="col-md-9" *ngIf="f?.devisExel.value != null">
+                        <p>{{ f?.devisExel?.value?.orignalName }} <i class="ft-download" (click)="downloadFile()"></i>
+                            <i class="ft-trash" *ngIf="!readOnly" (click)="removeFile()"></i></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</ng-container>

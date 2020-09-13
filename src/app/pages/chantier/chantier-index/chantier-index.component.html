@@ -1,0 +1,122 @@
+<div class="content-header row">
+    <div class="content-header-left col-md-6 col-12 mb-2">
+        <h3 class="content-header-title mb-0">{{'list.title' | translate}}</h3>
+    </div>
+    <div class="content-header-right col-md-6 col-12">
+
+    </div>
+</div>
+<div class="tab-pane" id="toutesDevis" aria-labelledby="aboutIcon11-tab1" role="tab" aria-selected="false">
+    <section id="multi-column">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-content collapse show">
+                        <div class="card-body init-card-body card-dashboard">
+                            <div>
+                                <div>
+                                    <recherche-avancee>
+                                        <div class="recherche-avancee-body">
+                                            <div class="ui-g ui-fluid">
+                                                <div class="ui-g-4 ui-md-4">
+                                                    <h6 style="font-weight: bold">
+                                                        {{'labels.chantier' | translate }}</h6>
+
+                                                    <input type="text" class="form-control" (keyup)="search()"
+                                                        [(ngModel)]="serach"
+                                                        [placeholder]="'labels.search' | translate" />
+                                                </div>
+                                                <div class="ui-g-4 ui-md-4">
+                                                    <h6 style="font-weight: bold">{{'labels.statut' | translate }}</h6>
+                                                    <ng-select labelForId=type
+                                                        placeholder="{{'labels.statut' | translate}}"
+                                                        [hideSelected]="true" (change)="search()"  [(ngModel)]="statut"
+                                                        notFoundText="{{'labels.noFoundItem' | translate}}">
+                                                        <ng-option *ngFor="let item of statuts;let i = index"
+                                                            value="{{item?.id}}">
+                                                            {{item?.label}} </ng-option>
+                                                    </ng-select>
+                                                </div>
+                                                <div class="ui-g-4 ui-md-4">
+                                                    <h6 style="font-weight: bold">{{'labels.client' | translate }}</h6>
+                                                    <ng-select [hideSelected]="true"
+                                                        placeholder="{{'labels.client' | translate }}"
+                                                        notFoundText="{{'labels.noFoundItem' | translate}}"
+                                                        (change)="search()" [(ngModel)]="client" (click)="getClients()">
+                                                        <ng-option *ngFor="let item of listClients; let i = index"
+                                                            value="{{item?.id}}">
+                                                            {{ item?.nom }}</ng-option>
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </recherche-avancee>
+                                    <table style="overflow: hidden;">
+                                        <thead>
+                                            <tr>
+                                                <th style="padding-left: 32px !important;">
+                                                    {{ 'labels.chantier' | translate }}</th>
+                                                <th>{{ 'labels.client' | translate }}</th>
+                                                <th>{{ 'labels.statut' | translate }}</th>
+                                                <th>{{ 'labels.date_creation' | translate }}</th>
+                                                <th style="text-align: center !important;">
+                                                    {{ 'labels.actions' | translate }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody
+                                            *ngFor="let chantier of chantiers?.list ;let i of chantiers?.list.length">
+                                            <tr (dblclick)="doubleClick(chantier?.id)">
+                                                <td>
+                                                    <span><img src="assets/app/images/folder-icon.png"
+                                                            style="width: 1.4rem; position: relative; top: -0.2rem;"
+                                                            alt="branding logo"></span> {{chantier?.nom}}
+                                                </td>
+                                                <td>{{ chantier?.client?.nom }}</td>
+                                                <td *ngIf="chantier?.statut == statutChantier.EnEtude"><span
+                                                        class="badge badge-default badge-secondary">{{ 'labels.enEtude' | translate }}</span>
+                                                </td>
+                                                <td *ngIf="chantier?.statut == statutChantier.Accepte"><span
+                                                        class="badge badge-default badge-success">{{ 'labels.accepte' | translate }}</span>
+                                                </td>
+                                                <td *ngIf="chantier?.statut == statutChantier.NonAccepte"><span
+                                                        class="badge badge-default badge-info badge-annuler">{{ 'labels.nonaccepte' | translate }}</span>
+                                                </td>
+                                                <td *ngIf="chantier?.statut == statutChantier.Termine"><span
+                                                        class="badge badge-default badge-info nonaccepter">{{ 'labels.termine' | translate }}</span>
+                                                </td>
+                                                <td>{{chantier?.date_creation | date : 'dd/MM/yyyy'}}
+                                                </td>
+                                                <td class="actions" style="text-align: center !important;">
+                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <button type="button" class="btn btn-primary btn-md btn-actions"
+                                                            [routerLink]="['/chantiers/detail',chantier?.id]"
+                                                            placement="bottom"
+                                                            ngbTooltip="{{'labels.voirDetails' | translate}}"><i
+                                                                class="ft-eye"></i></button>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-12" *ngIf="chantiers?.list.length == 0">
+                                    <p class="no-data-available">{{ 'noDataAvaible' | translate }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <paination [painationInfo]="chantiers" (chagePageNamber)="chagePageNumber($event)"
+                                        (changePageSize)="changePageSize($event)" [pageSizes]="pageSizes"></paination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<custom-loader [displayLoader]="processing"></custom-loader>

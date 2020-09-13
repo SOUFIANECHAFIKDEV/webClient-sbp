@@ -1,0 +1,73 @@
+<div class="content-header-right col-md-12 col-12">
+  <div class="btn-group float-md-right" role="group" style="margin-top: 1rem;">
+    <a *ngIf="facture" class="btn btn-secondary" style="color:white;" (click)="generatePDF()" placement="bottom"
+      ngbTooltip="{{ 'labels.telecharger' | translate }}">
+      {{ 'labels.telecharger' | translate }} <i class="fa fa-download"></i>
+    </a>
+    <a class="btn btn-danger" style="color:white;" (click)="revenir()" placement="bottom"
+      ngbTooltip="{{ 'labels.retour' | translate }}">
+      <i class="fa fa-backward"></i> {{ 'labels.retour' | translate }}
+
+    </a>
+  </div>
+</div>
+<!-- <i class="fa fa-backward"></i> -->
+
+<div class="content-header row">
+  <div class="content-header-left col-md-6 col-12 mb-2">
+    <h3 class="content-header-title mb-0">
+      {{ 'showfacture.title' | translate }} {{ facture?.reference }}
+    </h3>
+    <div class="row breadcrumbs-top">
+      <div class="breadcrumb-wrapper col-12">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a (click)="revenir()">{{ 'showfacture.titleFactures' | translate }}</a>
+          </li>
+          <li class="breadcrumb-item active">{{ 'showfacture.title' | translate }}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content-body">
+  <div class="col-xl-12 col-lg-12">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-body">
+          <!-- <ul class="nav nav-pills nav-pill-bordered">
+          <li class="nav-item">
+              <a class="nav-link active" id="client-tab" data-toggle="pill" href="#client"
+                aria-expanded="true">{{ 'showfacture.information' | translate }}</a>
+            </li> 
+            <li class="nav-item" *ngIf="
+                  facture?.status != statutFacture?.Brouillon &&
+                  facture?.status != statutFacture?.Annule
+                ">
+             <a class="nav-link" id="paiement-tab" data-toggle="pill" href="#paiement"
+                aria-expanded="true">{{ 'showfacture.paiement' | translate }}</a> 
+            </li>
+
+
+
+          </ul> -->
+          <div class="tab-content px-1 pt-1">
+            <div role="tabpanel" class="tab-pane active" id="client" aria-labelledby="client-tab" aria-expanded="true">
+              <facture-information [articles]="articles" [facture]="facture" [client]="client">
+              </facture-information>
+            </div>
+            <!-- <div role="tabpanel" class="tab-pane" id="paiement" aria-labelledby="paiement-tab" aria-expanded="true">
+              <paiement-facture [facture]="facture" (refresh)="refresh()"></paiement-facture>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<custom-loader [displayLoader]="processing"></custom-loader>

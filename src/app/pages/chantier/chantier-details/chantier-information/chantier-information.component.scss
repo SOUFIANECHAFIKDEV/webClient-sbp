@@ -1,0 +1,74 @@
+.card-contact {
+    border: 2px #000 solid !important;
+    box-shadow: 2px 4px #404e67 !important;
+}
+
+// .paddingTop {
+//     padding-top: 0rem !important;
+//     position: relative;
+//     bottom: 0.1rem;
+// }
+
+.Label-radion-btn {
+    padding: 1rem;
+    position: relative;
+    bottom: 0.15rem;
+}
+
+.card-body {
+    overflow: inherit !important;
+}
+
+.form-section {
+    color: #404E67;
+    line-height: 3rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #404E67;
+}
+
+
+
+.btn-nonAccepte {
+    border-radius: 5px 0px 0px 5px !important;
+}
+
+.btn-enEtude {
+    border-radius: 0 !important;
+}
+
+.btn-termine {
+    border-radius: 0 5px 5px 0 !important;
+}
+
+.statut-Annulee {
+    background-color: #fe0000 !important;
+    color: #eceff1;
+  }
+  
+  .statut-Realise {
+    background-color: #2ecc71 !important;
+    color: #eceff1;
+  }
+  
+  .statut-Planifiee {
+    background-color: #00d2d3 !important;
+    color: #eceff1;
+  }
+  
+  .statut-Brouillon {
+    background-color: #ffa87d !important;
+    color: #eceff1;
+  }
+  
+
+  .statut-Facturee {
+    background-color: #3498db !important;
+    color: #eceff1;
+  }
+
+  .btn.btn-round{
+    margin-top: -110px  !important;
+}
+.card-header{
+    background: none !important;
+}

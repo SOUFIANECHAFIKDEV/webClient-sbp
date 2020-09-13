@@ -1,0 +1,81 @@
+<div class="content-header row">
+    <div class="content-header-left  col-12">
+        <div class="row">
+            <div>
+                <h3 class="content-header-title mb-0">{{ 'labels.chantier' | translate }} : {{ chantier?.nom }}</h3>
+
+            </div>
+            <div>
+                <span *ngIf="chantier?.statut == statutChantier.EnEtude"
+                    class="btn btn-round statut-Brouillon">{{ 'labels.enEtude' | translate }}</span>
+                <span *ngIf="chantier?.statut == statutChantier.Termine"
+                    class="btn btn-round statut-Planifiee">{{ 'labels.termine' | translate }}</span>
+                <span *ngIf="chantier?.statut == statutChantier.Accepte"
+                    class="btn btn-round statut-Realise">{{ 'labels.accepte' | translate }}</span>
+                <span *ngIf="chantier?.statut == statutChantier.NonAccepte"
+                    class="btn btn-round statut-Annulee">{{ 'labels.nonAccepte' | translate }}</span>
+
+
+            </div>
+        </div>
+        <div class="row breadcrumbs-top">
+            <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a [routerLink]="['/chantiers']">{{'title' | translate}}</a>
+                    </li>
+                    <li class="breadcrumb-item active">{{'show.title' | translate}}
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="content-body">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+            <div class="card-content">
+                <div class="card-body">
+                    <ul class="nav nav-pills nav-pill-bordered">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="client-tab" data-toggle="pill" href="#client" Nom="true"
+                                placement="bottom"
+                                ngbTooltip="{{'show.information'|translate}}">{{'show.information'|translate}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="potes-tab" data-toggle="pill" href="#potes" aria-expanded="false"
+                                placement="bottom"
+                                ngbTooltip="{{'show.factures'|translate}}">{{'show.factures'|translate}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="historique-tab" data-toggle="pill" href="#historique"
+                                aria-expanded="false" placement="bottom"
+                                ngbTooltip="{{'show.ficheintervention'|translate}}">{{'show.ficheintervention'|translate}}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content px-1 pt-1">
+                        <div role="tabpanel" class="tab-pane active" id="client" aria-labelledby="client-tab"
+                            aria-expanded="true">
+                            <chantier-information [chantier]="chantier"></chantier-information>
+                        </div>
+                        <div class="tab-pane" id="historique" role="tabpanel" aria-labelledby="historique-tab"
+                            aria-expanded="false">
+                            <app-ficheintervention-index></app-ficheintervention-index>
+                        </div>
+                        <div class="tab-pane" id="potes" role="tabpanel" aria-labelledby="potes-tab"
+                            aria-expanded="false">
+                            <app-facture-index></app-facture-index>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<custom-loader [displayLoader]="processing"></custom-loader>

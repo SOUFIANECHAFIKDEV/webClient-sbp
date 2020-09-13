@@ -1,0 +1,63 @@
+<div class="content-header-right col-md-12 col-12">
+    <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown"
+        style="margin-top: 1rem;">
+
+
+
+
+
+        <a class="btn btn-secondary btn-telecharger" style="color:white;" (click)="generatePDF()" placement="bottom"
+            ngbTooltip="{{'labels.telecharger' | translate}} ">
+            {{ 'labels.telecharger' | translate }} <i class="fa fa-download"></i>
+        </a>
+        <a class="btn btn-danger" style="color:white;" (click)="revenir()" placement="bottom"
+            ngbTooltip="{{ 'labels.retour' | translate }}">
+            <i class="fa fa-backward"></i> {{ 'labels.retour' | translate }}
+        </a>
+
+    </div>
+
+
+
+</div>
+
+<div class="content-header row">
+    <div class="content-header-left col-md-6 col-12 mb-2">
+        <h3 class="content-header-title mb-0">{{'showFicheintervention.title' | translate}}
+            {{ ficheIntervention?.reference }} </h3>
+        <div class="row breadcrumbs-top">
+            <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a
+                            (click)="revenir()">{{'showFicheintervention.showFicheintervention' | translate}}</a>
+                    </li>
+                    <li class=" breadcrumb-item active">{{'showFicheintervention.title' | translate}}
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-body">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+
+                    <div>
+                        <div>
+                            <!-- <app-informations [ficheIntervention]="ficheIntervention" [client]="client">
+                            </app-informations> -->
+                            <ficheIntervention-informations [ficheIntervention]="ficheIntervention" [client]="client">
+                            </ficheIntervention-informations>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <custom-loader [displayLoader]="processing"></custom-loader>
